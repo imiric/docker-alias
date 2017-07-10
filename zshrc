@@ -14,6 +14,12 @@ alias dpa="docker ps -a"
 # Get images
 alias di="docker images"
 
+# Get volumes
+alias dv="docker volume"
+
+# Get volumes list
+alias dvl="docker volume ls"
+
 # Get container IP
 alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 
@@ -26,6 +32,9 @@ alias dki="docker run -i -t -P"
 # Execute interactive container, e.g., $dex base /bin/bash
 alias dex="docker exec -i -t"
 
+# Execute bash on a name container
+dexb() { docker exec -it $(docker ps |grep $1 | awk '{print $3}') bash; }
+
 # Stop all containers
 dstop() { docker stop $(docker ps -a -q); }
 
@@ -33,10 +42,19 @@ dstop() { docker stop $(docker ps -a -q); }
 drm() { docker rm $(docker ps -a -q); }
 
 # Stop and Remove all containers
-alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+alias drma='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+
+# Remove all stopped containers
+drmd() { docker rm $(docker ps -f "status=exited" -q); }
 
 # Remove all images
-dri() { docker rmi $(docker images -q); }
+drmi() { docker rmi $(docker images -q); }
+
+# Remove all <none> images
+drmid() { docker rmi $(docker images -f "dangling=true" -q); }
+
+# Remove all dangline volumes
+drmvd() { docker volume rm $(docker volume ls -qf dangling=true); }
 
 # Dockerfile build, e.g., $dbu tcnksm/test 
 dbu() { docker build -t=$1 .; }
