@@ -33,7 +33,7 @@ alias dki="docker run -i -t -P"
 alias dex="docker exec -i -t"
 
 # Execute bash on a name container
-dexb() { docker exec -it $(docker ps |grep $1 | awk '{print $3}') bash; }
+dexb() { docker exec -it $1 bash; }
 
 # Stop all containers
 dstop() { docker stop $(docker ps -a -q); }
@@ -44,7 +44,7 @@ drm() { docker rm $(docker ps -a -q); }
 # Stop and Remove all containers
 alias drma='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
-# Remove all stopped containers
+# Remove all stopped containers 
 drmd() { docker rm $(docker ps -f "status=exited" -q); }
 
 # Remove all images
