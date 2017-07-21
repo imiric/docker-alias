@@ -78,4 +78,4 @@ dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/[
 # Bash into running container
 dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
 
-. /etc/environments
+cat /etc/environment | awk '$0="export "$0' | xargs
