@@ -57,7 +57,7 @@ alias drma='docker rm $(docker ps -a -q);'
 alias drmsa='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
 # Remove all stopped containers
-alias drme="docker rm $(docker ps -f "status=exited" -q);"
+alias drme='docker rm $(docker ps -f "status=exited" -q);'
 drmd() { docker rm $(docker ps -f "status=exited" -q); }
 
 # Remove all images
